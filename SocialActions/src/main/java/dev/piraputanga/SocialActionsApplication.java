@@ -2,12 +2,14 @@ package dev.piraputanga;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-public class SocialActionsServicesApplication {
+@ComponentScan("dev.piraputanga")
+public class SocialActionsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SocialActionsServicesApplication.class, args);
+		SpringApplication.run(SocialActionsApplication.class, args);
 	}
 
 }
