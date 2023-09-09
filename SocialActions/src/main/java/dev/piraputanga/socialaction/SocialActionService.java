@@ -8,53 +8,51 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 
 @Service
 public class SocialActionService {
-    
-
 
     @Autowired
     private SocialActionRepository repository;
 
-    //CRUD
+    // CRUD
 
-    //CREATE
-    public SocialAction createSocialAction(SocialAction socialaction) throws DuplicateKeyException{
-        if(this.repository.existsById(socialaction.getId()))
+    // CREATE
+    public SocialAction createSocialAction(SocialAction socialaction) throws DuplicateKeyException {
+        if (this.repository.existsById(socialaction.getId()))
             throw new DuplicateKeyException("ação já cadastrada");
         return this.repository.save(socialaction);
     }
 
-    //READ
-    public Optional<SocialAction> getSocialAction(String id){
+    // READ
+    public Optional<SocialAction> getSocialAction(String id) {
         return this.repository.findById(id);
     }
 
-    //UPDATE
-    // public SocialAction updateById(String id, SocialAction socialaction) throws ResponseStatusException{
-    //     SocialAction socialActionOptional = this.repository.findById(id);
-    //     if(socialActionOptional == null){
-    //         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    //     }
-    //     socialActionOptional.setId(id);
-    //     this.repository.save(socialActionOptional);
-    // }
+    // UPDATE
+    public SocialAction updateById(String id, SocialAction socialAction) throws ResponseStatusException {
+        Optional<SocialAction> socialActionOptional = this.repository.findById(id);
+        if (socialActionOptional.isPresent()) {
+            socialAction.setId(id);
+            return this.repository.save(socialAction);
+        } else {
+            throw new ResponseStatusException(HttpStatusCode.valueOf(404));
+        }
+    }
 
-    //DELETE
-    public void deleteSocialAction(String id){
+    // DELETE
+    public void deleteSocialAction(String id) {
         this.repository.deleteById(id);
     }
 
-    //OTHER
+    // SEARCH
 
-    public List<SocialAction> findSocialActions(String texto){
-        if(texto == null || texto.isEmpty())
+    public List<SocialAction> findSocialActions(String texto) {
+        if (texto == null || texto.isEmpty())
             return this.repository.findAll();
         else
             return this.repository.findByNameContainingIgnoreCase(texto);
     }
-
-
 
 }
