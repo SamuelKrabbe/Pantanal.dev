@@ -1,0 +1,113 @@
+* {
+	padding: 0px;
+	margin: 0px;
+	box-sizing: border-box;
+	font-family: "Montserrat", sans-serif;
+}
+
+#container {
+	margin: auto;
+}
+
+#navbar {
+	position: sticky;
+	display: flex;
+	justify-content: center;
+	align-self: stretch;
+	background-color: white;
+	color: #015da0;
+	gap: 52px;
+}
+
+#navbar a:hover {
+	color: #0339fc;
+}
+
+#logo img {
+	width: 127px;
+	margin: auto 30px auto 20px;
+}
+
+#navbar a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+	font-size: 16px;
+	color: inherit;
+}
+
+#pesquisa {
+	margin-left: 300px;
+}
+
+#pesquisa img {
+	width: 30px;
+}
+
+#primeiraImg {
+	width: 100%;
+	height: 700px;
+}
+
+#content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+	padding-top: 38px;
+	width: 1500px;
+	gap: 38px;
+}
+
+h1 {
+	margin: 38px auto 25px 90px;
+}
+
+p {
+	margin: 0 200px 25px;
+}
+
+#content ul {
+	list-style: none;
+	margin: 0 200px 100px;
+}
+
+#content ul li {
+	padding: 20px 0;
+}
+
+#footer {
+	background-color: #22282e;
+	color: white;
+	display: flex;
+	align-items: center;
+	padding: 20px;
+	margin: auto;
+	gap: 700px;
+}
+
+#footer ul {
+	list-style: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#links-footer li {
+	padding: 20px;
+}
+
+#links-footer li a {
+	text-decoration: none;
+	color: inherit;
+}
+
+#redesSociais li {
+	padding: 20px;
+}
+
+#redesSociais li a {
+	text-decoration: none;
+	color: inherit;
+}
