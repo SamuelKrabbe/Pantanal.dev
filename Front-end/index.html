@@ -29,7 +29,7 @@
 						<span class="close" onclick="closeModal()"
 							><ion-icon name="close-outline"></ion-icon
 						></span>
-						<h2>Cadastro de Ação Social</h2>
+						<h2 style="margin: 15px auto;">Cadastro de Ação Social</h2>
 						<form>
 							<label for="socialActionName"
 								>Nome da Ação Social:</label
@@ -49,6 +49,24 @@
 								placeholder="Descrição da ação social"
 								required
 							></textarea>
+							<br /><br />
+							<label for="startDate">Data de início:</label>
+							<input
+								type="date"
+								id="startDate"
+								name="startDate"
+								placeholder="Data de início"
+								required
+							></input>
+							<br /><br />
+							<label for="endDate">Data de término:</label>
+							<input
+								type="date"
+								id="endDate"
+								name="endDate"
+								placeholder="Data de término"
+								required
+							></input>
 							<br /><br />
 							<input type="submit" value="Cadastrar" />
 						</form>
@@ -180,6 +198,7 @@
 				</ul>
 			</div>
 		</div>
+
 		<script
 			type="module"
 			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
