@@ -43,11 +43,11 @@
 	margin-left: 300px;
 }
 
-#search img {
-	width: 30px;
+#search ion-icon {
+	font-size: 30px;
 }
 
-#banner-img {
+#bannerImg {
 	width: 100%;
 	height: 700px;
 }
@@ -111,6 +111,83 @@ p {
 	color: inherit;
 }
 
-#links-footer {
+#linksFooter {
 	gap: 20px;
+}
+
+/* CADASTRO DE AÇÃO SOCIAL (modal) */
+.modal {
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.5);
+	padding-top: 60px;
+}
+
+.modal-content {
+	background-color: #fefefe;
+	margin: 5% auto;
+	padding: 20px;
+	border: 1px solid #706f6f;
+	width: 80%;
+}
+
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+input[type="submit"] {
+	background-color: #4caf50;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: transform 0.3s;
+}
+
+input[type="submit"]:hover {
+	transform: scale(1.1);
+	background-color: #45a049;
+}
+
+/* BARRA DE PESQUISA */
+.search-box {
+	border-radius: 7px;
+	overflow: hidden;
+	border: 1px solid #015da0;
+	display: none;
+}
+
+.search-box input {
+	padding: 5px;
+	width: 200px;
+}
+
+.search-box button {
+	padding: 5px 10px;
+	background-color: #4caf50;
+	border: none;
+	color: white;
+	cursor: pointer;
+}
+
+.search-box button:hover {
+	background-color: #45a049;
+}
+
+#closeSearchBox {
+	display: none;
 }

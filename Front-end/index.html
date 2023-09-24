@@ -20,9 +20,41 @@
 					><img src="./assets/logo.jpg" alt="fish logo"
 				/></a>
 
-				<a id="register" href="#"
+				<a id="register" href="#" onclick="openModal()"
 					><span><b>CADASTRAR</b> AÇÃO</span></a
 				>
+
+				<div id="myModal" class="modal">
+					<div class="modal-content">
+						<span class="close" onclick="closeModal()"
+							><ion-icon name="close-outline"></ion-icon
+						></span>
+						<h2>Cadastro de Ação Social</h2>
+						<form>
+							<label for="socialActionName"
+								>Nome da Ação Social:</label
+							>
+							<input
+								type="text"
+								id="socialActionName"
+								name="socialActionName"
+								placeholder="Nome da ação social"
+								required
+							/>
+							<br /><br />
+							<label for="description">Descrição:</label>
+							<textarea
+								id="description"
+								name="description"
+								placeholder="Descrição da ação social"
+								required
+							></textarea>
+							<br /><br />
+							<input type="submit" value="Cadastrar" />
+						</form>
+					</div>
+				</div>
+
 				<a id="share" href="#"
 					><span><b>DIVULGAR</b> AÇÃO</span></a
 				>
@@ -32,19 +64,36 @@
 				<a id="help" href="#"
 					><span><b>AJUDA</b></span></a
 				>
-				<a id="search" href="#"
-					><span
-						><img
-							src="./assets/search.svg"
-							alt="barra de pesquisa" /></span
-				></a>
+				<a id="search" href="#" onclick="toggleSearch()"
+					><span id="openSearchBox"
+						><ion-icon name="search-outline"></ion-icon
+					></span>
+					<span id="closeSearchBox"
+						><ion-icon name="close-circle-outline"></ion-icon
+					></span>
+				</a>
+
+				<div class="search-box" id="searchBox">
+					<input type="text" placeholder="Pesquisar..." />
+					<button>Buscar</button>
+				</div>
+
 				<a id="sign-up" href="#"
 					><span><b>ENTRAR</b></span></a
 				>
 			</div>
-			<img id="banner-img" src="./assets/contentImg.jpg" alt="..." />
+
+			<img id="bannerImg" src="./assets/contentImg.jpg" alt="..." />
+
 			<div id="content">
 				<h1>QUEM SOMOS?</h1>
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit.
+					Enim laudantium minus, iure magni autem fugit! Dignissimos
+					ab natus eos, laborum assumenda, nemo commodi, beatae
+					explicabo excepturi voluptatum culpa recusandae eligendi!
+				</p>
+				<h1>VISÃO</h1>
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit.
 					Enim laudantium minus, iure magni autem fugit! Dignissimos
@@ -94,12 +143,12 @@
 				</ul>
 			</div>
 			<div id="footer">
-				<ul id="links-footer">
+				<ul id="linksFooter">
 					<li><a href="#">Termos de uso e proteção de dados</a></li>
 					<li><a href="#">Atendimento</a></li>
 					<li><a href="#">Canal de denúncias</a></li>
 				</ul>
-				<ul id="social-media">
+				<ul id="socialMedia">
 					<li>
 						<a href="#"
 							><ion-icon name="logo-instagram"></ion-icon
@@ -139,5 +188,6 @@
 			nomodule
 			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
 		></script>
+		<script src="script.js"></script>
 	</body>
 </html>
