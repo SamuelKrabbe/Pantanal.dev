@@ -29,7 +29,9 @@
 						<span class="close" onclick="closeModal()"
 							><ion-icon name="close-outline"></ion-icon
 						></span>
-						<h2 style="margin: 15px auto;">Cadastro de Ação Social</h2>
+						<h2 style="margin: 15px auto">
+							Cadastro de Ação Social
+						</h2>
 						<form>
 							<label for="socialActionName"
 								>Nome da Ação Social:</label
@@ -57,7 +59,7 @@
 								name="startDate"
 								placeholder="Data de início"
 								required
-							></input>
+							/>
 							<br /><br />
 							<label for="endDate">Data de término:</label>
 							<input
@@ -66,7 +68,7 @@
 								name="endDate"
 								placeholder="Data de término"
 								required
-							></input>
+							/>
 							<br /><br />
 							<input type="submit" value="Cadastrar" />
 						</form>
@@ -76,9 +78,11 @@
 				<a id="share" href="#"
 					><span><b>DIVULGAR</b> AÇÃO</span></a
 				>
-				<a id="volunteer" href="#"
-					><span><b>VOLUNTARIAR-SE</b></span></a
+
+				<a id="fetchSocialActions" href="#"
+					><span><b>VER</b> AÇÕES</span></a
 				>
+
 				<a id="help" href="#"
 					><span><b>AJUDA</b></span></a
 				>
@@ -197,6 +201,53 @@
 					</li>
 				</ul>
 			</div>
+		</div>
+
+		<div id="socialActionsListPage">
+			<div id="header">
+				<button id="backToMainPage">
+					<ion-icon name="arrow-back-outline"></ion-icon>
+				</button>
+
+				<h1>Social Actions List</h1>
+			</div>
+			<ul id="socialActionsList">
+				<ul class="socialAction">
+					<li class="id">ID</li>
+					<li class="name">NOME</li>
+					<li class="status">STATUS</li>
+					<li class="description">DESCRIÇÃO</li>
+					<li class="date">DATA DE INÍCIO</li>
+					<li class="date">DATA DE TÉRMINO</li>
+					<li class="more-about">SAIBA MAIS</li>
+				</ul>
+				<ul class="socialAction">
+					<li class="id">Action 2</li>
+					<li class="name">name of action 2.</li>
+					<li class="status"></li>
+					<li class="description"></li>
+					<li class="date"></li>
+					<li class="date"></li>
+					<li class="more-about">
+						<button>
+							<ion-icon name="arrow-forward-outline"></ion-icon>
+						</button>
+					</li>
+				</ul>
+				<ul class="socialAction">
+					<li class="id">Action 3</li>
+					<li class="name">name of action 3.</li>
+					<li class="status"></li>
+					<li class="description"></li>
+					<li class="date"></li>
+					<li class="date"></li>
+					<li class="more-about">
+						<button>
+							<ion-icon name="arrow-forward-outline"></ion-icon>
+						</button>
+					</li>
+				</ul>
+			</ul>
 		</div>
 
 		<script

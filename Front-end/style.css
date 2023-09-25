@@ -237,3 +237,74 @@ input[type="submit"]:hover {
 #closeSearchBox {
 	display: none;
 }
+
+/* Lista de ações sociais */
+#header {
+	display: flex;
+	align-items: center;
+}
+
+#header h1 {
+	display: flex;
+	align-items: center;
+	color: #015da0;
+	margin: 20px;
+}
+
+#backToMainPage {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100px;
+	height: 100px;
+	cursor: pointer;
+	background: none;
+	border: none;
+	font-size: 30px;
+	color: #015da0;
+	transition: transform 0.3s;
+}
+
+#backToMainPage:hover {
+	transform: scale(1.5);
+}
+
+#socialActionsList {
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+}
+
+.socialAction {
+	display: flex;
+	list-style: none;
+	width: 100%;
+}
+
+.socialAction li {
+	border: 1px solid gray;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	width: 100%;
+}
+
+.more-about button {
+	display: flex;
+	justify-content: center;
+	margin: 0;
+	padding: 0px;
+	background: none;
+	border: none;
+	font-size: 50px;
+	color: #45a049;
+	width: 100%;
+	transition: transform 0.3s;
+}
+
+.more-about button:hover {
+	transform: scale(1.5);
+	color: #4caf50;
+}
