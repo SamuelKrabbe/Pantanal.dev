@@ -56,32 +56,21 @@ document
 function getSocialActions() {
 	const url = "http://localhost:8080/socialactions";
 
-	const headers = new Headers();
-	headers.append("Content-Type", "application/json"); // Example header, replace with your headers
-
 	const requestOptions = {
-		method: "GET", // HTTP method (GET, POST, PUT, DELETE, etc.)
-		headers: headers,
+		method: 'GET',
+		headers: {
+			'Accept': 'application/json',
+		},
 	};
 
 	fetch(url, requestOptions)
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error("Network response was not ok");
-			}
-			return response;
-		})
-		.then((data) => {
-			for (const item in data) {
+		.then(response => response.json())
+		.then(response => {
+			data = response;
+			console.log(data);
+
+			data.forEach(item => {
 				console.log(item);
-				document
-					.createElement("ul")
-					.appendChild(
-						document
-							.createElement("li")
-							.appendChild(document.createTextNode(item.id))
-					);
-			}
+			});
 		})
-		.catch((error) => console.error("Error fetching data:", error));
 }
