@@ -2,6 +2,7 @@ services:
   - type: web
     name: keycloak
     runtime: image
+    startCommand: kc.sh start-dev
     image:
       url: quay.io/keycloak/keycloak:22.0.4
     plan: free
