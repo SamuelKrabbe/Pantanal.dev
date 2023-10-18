@@ -1,7 +1,7 @@
 services:
   - type: web
     name: keycloak
-    runtime: keycloak
+    runtime: image
     dockerCommand: -v start-dev
     envVars:
     - key: KEYCLOAK_ADMIN
@@ -9,5 +9,5 @@ services:
     - key: KEYCLOAK_ADMIN_PASSWORD
       value: A4d!25oS8h1%#!
 
-keycloak:
+image:
   url: quay.io/keycloak/keycloak:22.0.4
