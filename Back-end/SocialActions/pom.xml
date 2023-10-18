@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>dev.piraputanga</groupId>
 	<artifactId>SocialActions</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>SocialActions</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -60,6 +60,11 @@
     		<artifactId>jakarta.validation-api</artifactId>
     		<version>3.0.1</version> <!-- Use the latest version available -->
 		</dependency>
+
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+	</dependency>
 	</dependencies>
 
 	<build>
@@ -71,4 +76,16 @@
 		</plugins>
 	</build>
 
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>2022.0.4</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>

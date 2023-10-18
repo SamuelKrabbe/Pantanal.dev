@@ -1,0 +1,25 @@
+
+spring:
+    application.name: socialactions-service
+    datasource:
+        url: jdbc:h2:file:./data/socialactions
+        driverClassName: org.h2.Driver
+        username: sa
+        password: 
+    jpa:
+        database-platform: org.hibernate.dialect.H2Dialect
+        generate-ddl: true
+        ddl-auto: create-drop
+    h2:
+        console:
+            enabled: true
+    error:
+        inlude-stacktrace: never
+
+server:
+    port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-server:8761/eureka
