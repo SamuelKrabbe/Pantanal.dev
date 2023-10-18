@@ -5,10 +5,25 @@ services:
     build: discovery-server/
     ports:
       - 8761:8761
+    healthcheck:
+      test: "curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
   api-gateway:
     image: api-gateway
     build: api-gateway/
     depends_on:
-      - discovery-server
+      discovery-server:
+        condition: service_healthy
     ports:
       - 8080:8080
+  socialactions-service:
+    image: socialactions-service
+    build: SocialActions/
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+    ports:
+      - 8081:8080
