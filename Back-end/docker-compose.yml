@@ -1,0 +1,14 @@
+version: '0.1'
+services:
+  discovery-server:
+    image: discovery-server
+    build: discovery-server/
+    ports:
+      - 8761:8761
+  api-gateway:
+    image: api-gateway
+    build: api-gateway/
+    depends_on:
+      - discovery-server
+    ports:
+      - 8080:8080
