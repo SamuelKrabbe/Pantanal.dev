@@ -1,9 +1,9 @@
 services:
   - type: web
     name: keycloak
-    runtime: docker
-    dockerCommand: start-dev
-    dockerfilePath: ./Back-end/Keycloak/Dockerfile
+    runtime: image
+    image:
+      url: quay.io/keycloak/keycloak:22.0.4
     plan: free
     envVars:
     - key: KEYCLOAK_ADMIN
