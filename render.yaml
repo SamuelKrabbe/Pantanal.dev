@@ -3,6 +3,7 @@ services:
     name: keycloak
     runtime: docker
     dockerCommand: start-dev
+    dockerfilePaht: ./Back-end/Keycloak/Dockerfile
     plan: free
     envVars:
     - key: KEYCLOAK_ADMIN
