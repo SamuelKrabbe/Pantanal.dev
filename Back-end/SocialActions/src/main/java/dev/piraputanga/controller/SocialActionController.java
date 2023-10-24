@@ -1,16 +1,11 @@
-package dev.piraputanga.socialaction;
+package dev.piraputanga.controller;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "http://127.0.0.1:5500/")
+import dev.piraputanga.model.SocialAction;
+import dev.piraputanga.dto.SocialActionDTO;
+import dev.piraputanga.dto.CreateSocialActionDTO;
+import dev.piraputanga.service.SocialActionService;
+
 @RestController
 @RequestMapping("/socialactions")
 public class SocialActionController {
@@ -46,14 +43,13 @@ public class SocialActionController {
                 .build();
     }
 
-    private SocialAction convertToEntity(SocialActionDTO socialaction) {
+    private SocialAction convertToEntity(CreateSocialActionDTO socialActionDTO){
         return SocialAction.builder()
-                .id(socialaction.getId())
-                .name(socialaction.getName())
-                .description(socialaction.getDescription())
-                .status(socialaction.getStatus())
-                .startDate(socialaction.getStartDate())
-                .endDate(socialaction.getEndDate())
+                .name(socialActionDTO.getName())
+                .description(socialActionDTO.getDescription())
+                .status(socialActionDTO.getStatus())
+                .startDate(socialActionDTO.getStartDate())
+                .endDate(socialActionDTO.getEndDate())
                 .build();
     }
 
@@ -64,7 +60,7 @@ public class SocialActionController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<SocialActionDTO> getSocialAction(@PathVariable(value = "id", required = true) String id) {
+    public ResponseEntity<SocialActionDTO> getSocialAction(@PathVariable(value = "id", required = true) Long id) {
         var socialAction = this.service.getSocialAction(id);
         if (socialAction.isPresent()) {
             return ResponseEntity.ok(convertToDTO(socialAction.get()));
@@ -73,7 +69,7 @@ public class SocialActionController {
     }
 
     @PostMapping
-    public ResponseEntity<SocialActionDTO> createSocialAction(@Valid @RequestBody SocialActionDTO socialaction) {
+    public ResponseEntity<SocialActionDTO> createSocialAction(@Valid @RequestBody CreateSocialActionDTO socialaction) {
         try {
             var result = this.service.createSocialAction(convertToEntity(socialaction));
             return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(result));
@@ -83,8 +79,8 @@ public class SocialActionController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<SocialActionDTO> updateSocialAction(@PathVariable(value = "id", required = true) String id,
-            @Valid @RequestBody SocialActionDTO socialAction) {
+    public ResponseEntity<SocialActionDTO> updateSocialAction(@PathVariable(value = "id", required = true) Long id,
+            @Valid @RequestBody CreateSocialActionDTO socialAction) {
         try {
             var result = this.service.updateById(id, convertToEntity(socialAction));
             return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(result));
@@ -94,7 +90,7 @@ public class SocialActionController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<?> deleteSocialAction(@PathVariable(value = "id", required = true) String id) {
+    public ResponseEntity<?> deleteSocialAction(@PathVariable(value = "id", required = true) Long id) {
         var socialAction = this.service.getSocialAction(id);
         if (socialAction.isPresent()) {
             this.service.deleteSocialAction(socialAction.get().getId());

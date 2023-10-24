@@ -15,11 +15,17 @@ spring:
             enabled: true
     error:
         inlude-stacktrace: never
-
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: http://localhost:8080/realms/PiraputangaDev
 server:
-    port: 8080
+    port: 8082
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://discovery-server:8761/eureka
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
