@@ -66,6 +66,8 @@ public class SocialContractController {
     }
 
     @GetMapping
+    @Operation(summary = "Lista todos os contratos sociais", description = "lista todos os contratos sociais(admin restricted)")
+    @ApiResponse(responseCode = "200", description = "lista de contratos")
     public Collection<SocialContractDTO> getAllSocialContracts() {
         return this.service.findSocialContracts(null).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
@@ -73,17 +75,26 @@ public class SocialContractController {
 
 
     @GetMapping(path = "/{actionId}")
+    @Operation(summary = "Lista todos os contratos sociais relacionados a uma ação social", description = "Lista todos os contratos sociais relacionados a uma ação social(admin restricted)")
+    @ApiResponse(responseCode = "200", description = "lista de contratos")
     public Collection<SocialContractDTO> getSocialContract(@PathVariable(value = "actionId", required = true) Long id) {
         return this.service.findSocialContractsBySocialAction(id).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @GetMapping(path = "/usersocialcontracts")
+    @Operation(summary = "Lista todos os contratos sociais relacionados a um usuário", description = "Lista todos os contratos sociais relacionados ao usuário logado")
+    @ApiResponse(responseCode = "200", description = "lista de contratos")
     public Collection<SocialContractDTO> getSocialContractByEmail(Authentication authentication) {
         String userEmail = (authentication.getPrincipal()).getClaim("email");
         return this.service.findSocialContracts(userEmail).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @PostMapping
+    @Operation(summary = "Cria um contrato social", description = "Cria e então retorna um contrato social")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "contrato gerado"),
+        @ApiResponse(responseCode = "409", description = "contrato duplicado")
+})
     public ResponseEntity<SocialContractDTO> createSocialContract(@Valid @RequestBody CreateSocialContractDTO socialContract) {
         try {
             var result = this.service.createSocialContract(convertToEntityCreate(socialContract));
@@ -94,6 +105,11 @@ public class SocialContractController {
     }
 
     @PutMapping(path = "/{id}")
+    @Operation(summary = "Atualiza um contrato social", description = "Atualiza um contrato social através do seu id(admin restricted)")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "contrato atualizado"),
+        @ApiResponse(responseCode = "409", description = "erro de conflito")
+    })
     public ResponseEntity<SocialContractDTO> updateSocialContract(@PathVariable(value = "id", required = true) Long id,
             @Valid @RequestBody SocialContractDTO socialContract) {
         try {
@@ -105,6 +121,11 @@ public class SocialContractController {
     }
 
     @DeleteMapping(path = "/{id}")
+    @Operation(summary = "Deleta um contrato social", description = "Deleta um contrato social através do seu id(admin restricted)")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "contrato deletado"),
+        @ApiResponse(responseCode = "404", description = "contrato não encontrado")
+    })
     public ResponseEntity<?> deleteSocialContract(@PathVariable(value = "id", required = true) Long id) {
         var socialContract = this.service.getSocialContract(id);
         if (socialContract.isPresent()) {
