@@ -1,17 +1,14 @@
-package dev.piraputanga.socialcontract;
+package dev.piraputanga.controller;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.stream.Collectors;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,17 +16,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import dev.piraputanga.dto.CreateSocialContractDTO;
+import dev.piraputanga.dto.SocialContractDTO;
+import dev.piraputanga.model.SocialContract;
+import dev.piraputanga.service.SocialContractService;
+import dev.piraputanga.utils.KeycloakJwtRolesConverter;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+
 import jakarta.validation.Valid;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500/")
 @RestController
-@RequestMapping("/socialactions")
+@RequestMapping("/socialcontracts")
 public class SocialContractController {
 
     @Autowired
@@ -51,25 +58,35 @@ public class SocialContractController {
                 .build();
     }
 
-    @GetMapping
-    public Collection<SocialContractDTO> getAllSocialContracts(
-            @RequestParam(value = "name", required = false) String texto) {
-        return this.service.findSocialContracts(texto).stream().map(this::convertToDTO).collect(Collectors.toList());
+        private SocialContract convertToEntityCreate(CreateSocialContractDTO socialContract) {
+        return SocialContract.builder()
+                .userEmail(socialContract.getUserEmail())
+                .socialActionId(socialContract.getSocialActionId())
+                .build();
     }
 
-    @GetMapping(path = "/{id}")
-    public Collection<SocialContractDTO> getSocialContract(@PathVariable(value = "id", required = true) String id) {
+    @GetMapping
+    public Collection<SocialContractDTO> getAllSocialContracts() {
+        return this.service.findSocialContracts(null).stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+
+
+    @GetMapping(path = "/{actionId}")
+    public Collection<SocialContractDTO> getSocialContract(@PathVariable(value = "actionId", required = true) Long id) {
         return this.service.findSocialContractsBySocialAction(id).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
-    @GetMapping(path = "/{email}")
-    public Collection<SocialContractDTO> getSocialContractByEmail(@PathVariable(value = "email", required = true) String email) {
-        return this.service.findSocialContracts(email).stream().map(this::convertToDTO).collect(Collectors.toList());
+
+    @GetMapping(path = "/usersocialcontracts")
+    public Collection<SocialContractDTO> getSocialContractByEmail(Authentication authentication) {
+        String userEmail = (authentication.getPrincipal()).getClaim("email");
+        return this.service.findSocialContracts(userEmail).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @PostMapping
-    public ResponseEntity<SocialContractDTO> createSocialContract(@Valid @RequestBody SocialContractDTO socialContract) {
+    public ResponseEntity<SocialContractDTO> createSocialContract(@Valid @RequestBody CreateSocialContractDTO socialContract) {
         try {
-            var result = this.service.createSocialContract(convertToEntity(socialContract));
+            var result = this.service.createSocialContract(convertToEntityCreate(socialContract));
             return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(result));
         } catch (DuplicateKeyException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -77,7 +94,7 @@ public class SocialContractController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<SocialContractDTO> updateSocialContract(@PathVariable(value = "id", required = true) String id,
+    public ResponseEntity<SocialContractDTO> updateSocialContract(@PathVariable(value = "id", required = true) Long id,
             @Valid @RequestBody SocialContractDTO socialContract) {
         try {
             var result = this.service.updateById(id, convertToEntity(socialContract));
@@ -88,7 +105,7 @@ public class SocialContractController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<?> deleteSocialContract(@PathVariable(value = "id", required = true) String id) {
+    public ResponseEntity<?> deleteSocialContract(@PathVariable(value = "id", required = true) Long id) {
         var socialContract = this.service.getSocialContract(id);
         if (socialContract.isPresent()) {
             this.service.deleteSocialContract(socialContract.get().getId());
