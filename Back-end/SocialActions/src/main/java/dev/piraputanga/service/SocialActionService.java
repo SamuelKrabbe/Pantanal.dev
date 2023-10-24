@@ -1,4 +1,4 @@
-package dev.piraputanga.socialaction;
+package dev.piraputanga.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
+import dev.piraputanga.repository.SocialActionRepository;
+import dev.piraputanga.model.SocialAction;
+
 @Service
 public class SocialActionService {
 
@@ -19,19 +22,19 @@ public class SocialActionService {
     // CRUD
 
     // CREATE
-    public SocialAction createSocialAction(SocialAction socialaction) throws DuplicateKeyException {
-        if (this.repository.existsById(socialaction.getId()))
-            throw new DuplicateKeyException("ação já cadastrada");
+    public SocialAction createSocialAction(SocialAction socialaction) {
+        // if (this.repository.existsById(socialaction.getId()))
+        //     throw new DuplicateKeyException("ação já cadastrada");
         return this.repository.save(socialaction);
     }
 
     // READ
-    public Optional<SocialAction> getSocialAction(String id) {
+    public Optional<SocialAction> getSocialAction(Long id) {
         return this.repository.findById(id);
     }
 
     // UPDATE
-    public SocialAction updateById(String id, SocialAction socialAction) throws ResponseStatusException {
+    public SocialAction updateById(Long id, SocialAction socialAction) throws ResponseStatusException {
         Optional<SocialAction> socialActionOptional = this.repository.findById(id);
         if (socialActionOptional.isPresent()) {
             socialAction.setId(id);
@@ -42,7 +45,7 @@ public class SocialActionService {
     }
 
     // DELETE
-    public void deleteSocialAction(String id) {
+    public void deleteSocialAction(Long id) {
         this.repository.deleteById(id);
     }
 
