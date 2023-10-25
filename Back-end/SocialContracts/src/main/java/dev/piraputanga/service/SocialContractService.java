@@ -1,4 +1,4 @@
-package dev.piraputanga.socialcontract;
+package dev.piraputanga.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.server.ResponseStatusException;
+
+import dev.piraputanga.model.SocialContract;
+import dev.piraputanga.repository.SocialContractRepository;
+
 import org.springframework.stereotype.Service;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
 @Service
@@ -26,12 +29,12 @@ public class SocialContractService {
     }
 
     // READ
-    public Optional<SocialContract> getSocialContract(String id) {
+    public Optional<SocialContract> getSocialContract(Long id) {
         return this.repository.findById(id);
     }
 
     // UPDATE
-    public SocialContract updateById(String id, SocialContract socialContract) throws ResponseStatusException {
+    public SocialContract updateById(Long id, SocialContract socialContract) throws ResponseStatusException {
         Optional<SocialContract> socialContractOptional = this.repository.findById(id);
         if (socialContractOptional.isPresent()) {
             socialContract.setId(id);
@@ -42,24 +45,24 @@ public class SocialContractService {
     }
 
     // DELETE
-    public void deleteSocialContract(String id) {
+    public void deleteSocialContract(Long id) {
         this.repository.deleteById(id);
     }
 
     // SEARCH
 
-    public List<SocialContract> findSocialContracts(String texto) {
-        if (texto == null || texto.isEmpty())
+    public List<SocialContract> findSocialContracts(String email) {
+        if (email == null || email.isEmpty())
             return this.repository.findAll();
         else
-            return this.repository.findByUserEmailContainingIgnoreCase(texto);
+            return this.repository.findByUserEmailContainingIgnoreCase(email);
     }
 
-    public List<SocialContract> findSocialContractsBySocialAction(String texto) {
-        if (texto == null || texto.isEmpty())
+    public List<SocialContract> findSocialContractsBySocialAction(Long id) {
+        if (id == null)
             return this.repository.findAll();
         else
-            return this.repository.findBySocialActionIdEmailContainingIgnoreCase(texto);
+            return this.repository.findBySocialActionId(id);
     }
 
 }

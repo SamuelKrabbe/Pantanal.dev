@@ -1,2 +1,4 @@
+.vscode/launch.json
 .vscode/settings.json
+Back-end/SocialContracts/data/*
 Back-end/SocialActions/data/*
