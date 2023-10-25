@@ -29,7 +29,7 @@ class SecurityConfig {
                 configuration.addAllowedMethod("POST");
                 configuration.addAllowedMethod("DELETE");
                 configuration.addAllowedMethod("OPTIONS");
-                // configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+                configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
                 // Configurar ip do frontend
                 configuration.setAllowedHeaders(
                                 Arrays.asList("Authorization", "Requestor-Type", "Cache-Control", "Content-Type"));
