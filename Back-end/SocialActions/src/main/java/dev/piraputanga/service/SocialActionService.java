@@ -21,7 +21,7 @@ public class SocialActionService {
     // CRUD
 
     // CREATE
-    public SocialAction createSocialAction(SocialAction socialaction) throws DuplicateKeyException{
+    public SocialAction createSocialAction(SocialAction socialaction) throws DuplicateKeyException {
         if (this.repository.existsById(socialaction.getId()))
             throw new DuplicateKeyException("ação já cadastrada");
         return this.repository.save(socialaction);
@@ -49,7 +49,6 @@ public class SocialActionService {
     }
 
     // SEARCH
-
     public List<SocialAction> findSocialActions(String texto) {
         if (texto == null || texto.isEmpty())
             return this.repository.findAll();
