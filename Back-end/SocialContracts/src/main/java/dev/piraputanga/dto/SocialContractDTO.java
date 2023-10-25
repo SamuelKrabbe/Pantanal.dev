@@ -2,8 +2,6 @@ package dev.piraputanga.dto;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

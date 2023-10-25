@@ -22,8 +22,7 @@ import dev.piraputanga.dto.CreateSocialContractDTO;
 import dev.piraputanga.dto.SocialContractDTO;
 import dev.piraputanga.model.SocialContract;
 import dev.piraputanga.service.SocialContractService;
-import dev.piraputanga.utils.KeycloakJwtRolesConverter;
-import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.core.ClaimAccessor;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -33,6 +32,7 @@ import jakarta.validation.Valid;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 
 @CrossOrigin(origins = "http://127.0.0.1:5500/")
 @RestController
@@ -85,7 +85,7 @@ public class SocialContractController {
     @Operation(summary = "Lista todos os contratos sociais relacionados a um usuário", description = "Lista todos os contratos sociais relacionados ao usuário logado")
     @ApiResponse(responseCode = "200", description = "lista de contratos")
     public Collection<SocialContractDTO> getSocialContractByEmail(Authentication authentication) {
-        String userEmail = (authentication.getPrincipal()).getClaim("email");
+        String userEmail = ((ClaimAccessor) authentication.getPrincipal()).getClaim("email");
         return this.service.findSocialContracts(userEmail).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 

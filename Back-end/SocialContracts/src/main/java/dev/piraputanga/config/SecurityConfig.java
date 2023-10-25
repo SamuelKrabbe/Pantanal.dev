@@ -9,7 +9,6 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 import dev.piraputanga.utils.KeycloakJwtRolesConverter;
 
 @Configuration
@@ -39,6 +38,8 @@ class SecurityConfig {
                                 .hasAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
                                 .requestMatchers(new AntPathRequestMatcher("/socialcontracts/usersocialcontracts", "GET"))
                                 .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin", KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "user")
+                                .requestMatchers(new AntPathRequestMatcher("/docs")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
                                 .anyRequest().authenticated());
 
                 return http.build();
