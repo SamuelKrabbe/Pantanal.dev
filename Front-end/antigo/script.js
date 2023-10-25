@@ -54,7 +54,7 @@ document
 	.addEventListener("click", getSocialActions);
 
 function getSocialActions() {
-	const url = "http://localhost:8080/socialactions";
+	const url = "http://localhost:8081/socialactions";
 
 	const requestOptions = {
 		method: 'GET',
