@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatusCode;
@@ -21,9 +20,7 @@ public class SocialActionService {
     // CRUD
 
     // CREATE
-    public SocialAction createSocialAction(SocialAction socialaction) throws DuplicateKeyException{
-        if (this.repository.existsById(socialaction.getId()))
-            throw new DuplicateKeyException("ação já cadastrada");
+    public SocialAction createSocialAction(SocialAction socialaction){
         return this.repository.save(socialaction);
     }
 
