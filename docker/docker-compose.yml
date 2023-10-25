@@ -1,0 +1,85 @@
+version: '0.1'
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.4
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      PROXY_ADDRESS_FORWARDING: true
+    container_name: keycloak
+    command: start-dev --import-realm --health-enabled=true --http-enabled true --proxy edge
+    volumes:
+      - ./Back-end/keycloak/realms:/opt/keycloak/data/import
+    ports:
+      - 8080:8080
+    networks:
+      - piraputangadev
+
+  discovery-server:
+    image: discovery-server
+    build: Back-end/discovery-server/
+    ports:
+      - 8761:8761
+    healthcheck:
+      test: "curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      - piraputangadev
+
+  api-gateway:
+    image: api-gateway
+    build: Back-end/api-gateway/
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+    ports:
+      - 8081:8081
+    networks:
+      - piraputangadev
+    environment:
+      - server.port=8081
+      - security.oauth2.resourceserver.jwt.issuer-uri=http://localhost/realms/PiraputangaDev/
+      - security.oauth2.resourceserver.jwt.jwk-set-uri=http://localhost/realms/PiraputangaDev/protocol/openid-connect/certs
+
+  socialactions-service:
+    image: socialactions-service
+    build: Back-end/SocialActions/
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+    ports:
+      - 8082:8082
+    networks:
+      - piraputangadev
+    environment:
+      - server.port=8082
+      - security.oauth2.resourceserver.jwt.issuer-uri=http://localhost/realms/PiraputangaDev
+  
+  webapp:
+    image: vuejs-webapp
+    build: Front-end/PiraputangaDev
+    depends_on:
+      - keycloak
+    ports: 
+      - 5173:8080
+    networks:
+      - piraputangadev
+
+  nginx:
+    container_name: nginx
+    hostname: nginx
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    networks:
+      - piraputangadev
+
+networks:
+  piraputangadev:
+    driver: bridge
