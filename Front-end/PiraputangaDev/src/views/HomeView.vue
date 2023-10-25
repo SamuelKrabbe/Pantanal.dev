@@ -41,6 +41,10 @@ function closeCreateSocialActionMenu() {
   styles.displayMenu = "none"
 }
 
+onMounted(() => {
+  console.log(keycloak.token)
+})
+
 </script>
 <template>
 
