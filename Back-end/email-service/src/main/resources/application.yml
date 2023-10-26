@@ -1,0 +1,25 @@
+server:
+    port: 8083
+
+keycloak:
+    clientSecret: ShKKRC6M5awKrNA1tkRq8EoXm5lMcgUv
+    realm: PiraputangaDev
+
+spring:
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: http://localhost:8080/realms/PiraputangaDev
+                    jwk-set-uri: http://localhost:8080/realms/PiraputangaDev/protocol/openid-connect/certs
+    mail: 
+        host: smtp.gmail.com
+        port: 587
+        username: piraputanga.dev@gmail.com
+        password: plinpkddvyoqdwha
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
