@@ -38,8 +38,9 @@ class SecurityConfig {
                                 .hasAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
                                 .requestMatchers(new AntPathRequestMatcher("/socialcontracts/usersocialcontracts", "GET"))
                                 .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin", KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "user")
-                                .requestMatchers(new AntPathRequestMatcher("/docs")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/docs/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/swagger-ui.html")).permitAll()
                                 .anyRequest().authenticated());
 
                 return http.build();
