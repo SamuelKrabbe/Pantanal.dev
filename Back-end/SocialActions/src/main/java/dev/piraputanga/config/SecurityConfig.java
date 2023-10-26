@@ -28,21 +28,21 @@ class SecurityConfig {
                 http.oauth2ResourceServer(server -> server.jwt(jwt -> jwt.jwtAuthenticationConverter(
                                 token -> new JwtAuthenticationToken(token, authoritiesConverter.convert(token)))));
 
-
-                http.authorizeHttpRequests((authorize) -> 
-                                authorize
+                http.authorizeHttpRequests((authorize) -> authorize
                                 .requestMatchers(new AntPathRequestMatcher("/socialactions", "POST"))
                                 .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
                                 .requestMatchers(new AntPathRequestMatcher("/socialactions", "DELETE"))
                                 .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
                                 .requestMatchers(new AntPathRequestMatcher("/socialactions/**", "DELETE"))
                                 .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
-                                .requestMatchers(new AntPathRequestMatcher("/socialactions", "PUT"))
+                                .requestMatchers(new AntPathRequestMatcher("/socialactions/**", "PUT"))
                                 .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
                                 .requestMatchers(new AntPathRequestMatcher("/socialactions", "GET"))
-                                .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin", KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "user")
+                                .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin",
+                                                KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "user")
                                 .requestMatchers(new AntPathRequestMatcher("/socialactions/**", "GET"))
-                                .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin", KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "user")
+                                .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin",
+                                                KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "user")
                                 .requestMatchers(new AntPathRequestMatcher("/docs/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/swagger-ui.html")).permitAll()
