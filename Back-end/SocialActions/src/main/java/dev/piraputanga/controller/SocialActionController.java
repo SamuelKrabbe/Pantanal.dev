@@ -52,7 +52,7 @@ public class SocialActionController {
                 .endDate(socialActionDTO.getEndDate())
                 .build();
     }
-
+    
     @GetMapping
     public Collection<SocialActionDTO> getAllSocialActions(
             @RequestParam(value = "name", required = false) String texto) {
@@ -65,7 +65,7 @@ public class SocialActionController {
         if (socialAction.isPresent()) {
             return ResponseEntity.ok(convertToDTO(socialAction.get()));
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build(); 
     }
 
     @PostMapping

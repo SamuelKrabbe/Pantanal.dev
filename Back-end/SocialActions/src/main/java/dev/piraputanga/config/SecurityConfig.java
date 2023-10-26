@@ -30,12 +30,16 @@ class SecurityConfig {
 
                 http.authorizeHttpRequests((authorize) -> authorize
                                 .requestMatchers(new AntPathRequestMatcher("/socialactions", "POST"))
-                                .hasAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
+                                .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
                                 .requestMatchers(new AntPathRequestMatcher("/socialactions", "DELETE"))
-                                .hasAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
+                                .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
+                                .requestMatchers(new AntPathRequestMatcher("/socialactions/**", "DELETE"))
+                                .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
                                 .requestMatchers(new AntPathRequestMatcher("/socialactions", "PUT"))
-                                .hasAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
+                                .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
                                 .requestMatchers(new AntPathRequestMatcher("/socialactions", "GET"))
+                                .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin", KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "user")
+                                .requestMatchers(new AntPathRequestMatcher("/socialactions/**", "GET"))
                                 .hasAnyAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin", KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "user")
                                 .anyRequest().authenticated());
 
