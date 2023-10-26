@@ -39,3 +39,4 @@ springdoc:
 server:
     error:
         include-stacktrace: never
+    port: 3000
