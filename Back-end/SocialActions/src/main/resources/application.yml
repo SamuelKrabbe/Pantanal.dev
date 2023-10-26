@@ -22,6 +22,12 @@ server:
     error:
         inlude-stacktrace: never
 
+springdoc:
+    api-docs:
+        path: /docs
+    swagger-ui:
+        path: /swagger-ui
+
 eureka:
   client:
     serviceUrl:

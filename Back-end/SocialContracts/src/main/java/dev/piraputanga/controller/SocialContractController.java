@@ -73,7 +73,6 @@ public class SocialContractController {
     }
 
 
-
     @GetMapping(path = "/{actionId}")
     @Operation(summary = "Lista todos os contratos sociais relacionados a uma ação social", description = "Lista todos os contratos sociais relacionados a uma ação social(admin restricted)")
     @ApiResponse(responseCode = "200", description = "lista de contratos")

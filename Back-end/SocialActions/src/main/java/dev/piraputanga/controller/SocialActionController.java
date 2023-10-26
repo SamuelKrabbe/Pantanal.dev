@@ -24,6 +24,9 @@ import dev.piraputanga.model.SocialAction;
 import dev.piraputanga.dto.SocialActionDTO;
 import dev.piraputanga.dto.CreateSocialActionDTO;
 import dev.piraputanga.service.SocialActionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/socialactions")
@@ -54,12 +57,16 @@ public class SocialActionController {
     }
     
     @GetMapping
+    @Operation(summary = "Lista todos as ações sociais", description = "lista todos as ações sociais(admin restricted)")
+    @ApiResponse(responseCode = "200", description = "lista de ações sociais")
     public Collection<SocialActionDTO> getAllSocialActions(
             @RequestParam(value = "name", required = false) String texto) {
         return this.service.findSocialActions(texto).stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @GetMapping(path = "/{id}")
+    @Operation(summary = "Busca ação social pelo id", description = "busca uma ação social pelo seu id")
+    @ApiResponse(responseCode = "200", description = "Uma ação social, buscada pelo id")
     public ResponseEntity<SocialActionDTO> getSocialAction(@PathVariable(value = "id", required = true) Long id) {
         var socialAction = this.service.getSocialAction(id);
         if (socialAction.isPresent()) {
@@ -69,6 +76,11 @@ public class SocialActionController {
     }
 
     @PostMapping
+    @Operation(summary = "Cria uma nova ação social", description = "Cria uma nova ação social e retorna a mesma")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "ação social criada"),
+        @ApiResponse(responseCode = "409", description = "ação social com mesmo nome já existe")
+    })
     public ResponseEntity<SocialActionDTO> createSocialAction(@Valid @RequestBody CreateSocialActionDTO socialaction) {
         try {
             var result = this.service.createSocialAction(convertToEntity(socialaction));
@@ -79,6 +91,11 @@ public class SocialActionController {
     }
 
     @PutMapping(path = "/{id}")
+    @Operation(summary = "Atualiza uma ação social", description = "Atualiza uma ação social através do seu id(admin restricted)")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "ação social atualizada"),
+        @ApiResponse(responseCode = "409", description = "erro de conflito")
+    })
     public ResponseEntity<SocialActionDTO> updateSocialAction(@PathVariable(value = "id", required = true) Long id,
             @Valid @RequestBody CreateSocialActionDTO socialAction) {
         try {
@@ -90,6 +107,11 @@ public class SocialActionController {
     }
 
     @DeleteMapping(path = "/{id}")
+    @Operation(summary = "Deleta uma ação social", description = "Deleta uma ação social através do seu id(admin restricted)")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "ação social deletada"),
+        @ApiResponse(responseCode = "404", description = "ação social não encontrada")
+    })
     public ResponseEntity<?> deleteSocialAction(@PathVariable(value = "id", required = true) Long id) {
         var socialAction = this.service.getSocialAction(id);
         if (socialAction.isPresent()) {
