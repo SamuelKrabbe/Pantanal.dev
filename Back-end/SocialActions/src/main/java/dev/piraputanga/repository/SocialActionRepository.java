@@ -8,4 +8,5 @@ import dev.piraputanga.model.SocialAction;
 
 public interface SocialActionRepository extends ListCrudRepository<SocialAction, Long> {
     public List<SocialAction> findByNameContainingIgnoreCase(String texto);
+    public Boolean existsByName(String name);
 }

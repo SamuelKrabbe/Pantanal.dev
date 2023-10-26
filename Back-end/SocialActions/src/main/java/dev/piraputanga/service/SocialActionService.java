@@ -22,7 +22,7 @@ public class SocialActionService {
 
     // CREATE
     public SocialAction createSocialAction(SocialAction socialaction) throws DuplicateKeyException {
-        if (this.repository.existsById(socialaction.getId()))
+        if (this.repository.existsByName(socialaction.getName()))
             throw new DuplicateKeyException("ação já cadastrada");
         return this.repository.save(socialaction);
     }
