@@ -77,7 +77,7 @@ public class SocialActionController {
 
     @PostMapping
     @Operation(summary = "Cria uma nova ação social", description = "Cria uma nova ação social e retorna a mesma")
-    @ApiResponses( value = {
+    @ApiResponses( value = { 
         @ApiResponse(responseCode = "200", description = "ação social criada"),
         @ApiResponse(responseCode = "409", description = "ação social com mesmo nome já existe")
     })
