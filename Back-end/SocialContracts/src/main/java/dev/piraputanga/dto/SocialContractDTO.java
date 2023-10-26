@@ -14,18 +14,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class SocialContractDTO {
-    @NotBlank(message = "O id é obrigatório.")
+    @NotNull(message = "O id é obrigatório.")
     private Long id;
 
     @NotBlank(message = "O email do usuario é obrigatório.")
     private String userEmail;
 
-    @NotBlank(message = "O id da ação é obrigatório.")
+    @NotNull(message = "O id da ação é obrigatório.")
     private Long socialActionId;
 
 
     @NotNull(message = "A data do contrato é obrigatória.")
-    private Date startDate;
+    private Date contractDate;
 
 
 }
