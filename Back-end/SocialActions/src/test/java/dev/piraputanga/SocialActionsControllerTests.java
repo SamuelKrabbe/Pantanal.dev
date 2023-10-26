@@ -17,19 +17,25 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.c4_soft.springaddons.security.oauth2.test.annotations.WithMockAuthentication;
 
 import dev.piraputanga.model.SocialAction;
+import dev.piraputanga.repository.SocialActionRepository;
 import dev.piraputanga.service.SocialActionService;
 
 @SpringBootTest
@@ -166,6 +172,144 @@ public class SocialActionsControllerTests {
         this.mockMvc
                 .perform(delete("/socialactions/1").with(csrf()))
                 .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
+    }
+
+    @Test
+    @WithMockAuthentication("ROLE_realm_admin")
+    public void testUpdateSocialAction_authorizedUser() throws Exception {
+
+        SocialAction socialAction2 = new SocialAction();
+        socialAction2.setName("social action 2");
+        socialAction2.setDescription("social action 2 test");
+        socialAction2.setStatus(true);
+        socialAction2.setStartDate(new Date());
+        socialAction2.setEndDate(new Date());
+
+        SocialAction socialAction3 = new SocialAction();
+        socialAction3.setId(1L);
+        socialAction3.setName("social action 3");
+        socialAction3.setDescription("social action 3 test");
+        socialAction3.setStatus(true);
+        socialAction3.setStartDate(new Date());
+        socialAction3.setEndDate(new Date());
+
+        Mockito.when(service.updateById(any(Long.class), any(SocialAction.class))).thenReturn(socialAction3);
+
+        String jsonRequest = "{"
+                + "\"name\": \"social action 2\","
+                + "\"status\": true,"
+                + "\"description\": \"social action 2 test\","
+                + "\"startDate\": \"2023-10-25\","
+                + "\"endDate\": \"2023-10-25\""
+                + "}";
+
+        this.mockMvc
+                .perform(put("/socialactions/1")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    @WithMockAuthentication("ROLE_realm_user")
+    public void testUpdateSocialAction_unauthorizedUser() throws Exception {
+
+        SocialAction socialAction2 = new SocialAction();
+        socialAction2.setName("social action 2");
+        socialAction2.setDescription("social action 2 test");
+        socialAction2.setStatus(true);
+        socialAction2.setStartDate(new Date());
+        socialAction2.setEndDate(new Date());
+
+        SocialAction socialAction3 = new SocialAction();
+        socialAction3.setId(1L);
+        socialAction3.setName("social action 3");
+        socialAction3.setDescription("social action 3 test");
+        socialAction3.setStatus(true);
+        socialAction3.setStartDate(new Date());
+        socialAction3.setEndDate(new Date());
+
+        Mockito.when(service.updateById(any(Long.class), any(SocialAction.class))).thenReturn(socialAction3);
+
+        String jsonRequest = "{"
+                + "\"name\": \"social action 2\","
+                + "\"status\": true,"
+                + "\"description\": \"social action 2 test\","
+                + "\"startDate\": \"2023-10-25\","
+                + "\"endDate\": \"2023-10-25\""
+                + "}";
+
+        this.mockMvc
+                .perform(put("/socialactions/1")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
+    }
+
+    @Test
+    @WithMockAuthentication("ROLE_realm_admin")
+    public void testUpdateSocialActionWhenNotExists_authorizedUser() throws Exception {
+
+        SocialAction socialAction2 = new SocialAction();
+        socialAction2.setName("social action 2");
+        socialAction2.setDescription("social action 2 test");
+        socialAction2.setStatus(true);
+        socialAction2.setStartDate(new Date());
+        socialAction2.setEndDate(new Date());
+
+        Mockito.when(service.updateById(any(Long.class), any(SocialAction.class)))
+                .thenAnswer((Answer<Exception>) invocation -> {
+                    throw new ResponseStatusException(HttpStatusCode.valueOf(404));
+                });
+
+        String jsonRequest = "{"
+                + "\"name\": \"social action 2\","
+                + "\"status\": true,"
+                + "\"description\": \"social action 2 test\","
+                + "\"startDate\": \"2023-10-25\","
+                + "\"endDate\": \"2023-10-25\""
+                + "}";
+
+        this.mockMvc
+                .perform(put("/socialactions/1")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(status().is(HttpStatus.CONFLICT.value()));
+    }
+
+    @Test
+    @WithMockAuthentication("ROLE_realm_user")
+    public void testUpdateSocialActionWhenNotExists_unauthorizedUser() throws Exception {
+
+        SocialAction socialAction2 = new SocialAction();
+        socialAction2.setName("social action 2");
+        socialAction2.setDescription("social action 2 test");
+        socialAction2.setStatus(true);
+        socialAction2.setStartDate(new Date());
+        socialAction2.setEndDate(new Date());
+
+        Mockito.when(service.updateById(any(Long.class), any(SocialAction.class)))
+                .thenAnswer((Answer<Exception>) invocation -> {
+                    throw new ResponseStatusException(HttpStatusCode.valueOf(404));
+                });
+
+        String jsonRequest = "{"
+                + "\"name\": \"social action 2\","
+                + "\"status\": true,"
+                + "\"description\": \"social action 2 test\","
+                + "\"startDate\": \"2023-10-25\","
+                + "\"endDate\": \"2023-10-25\""
+                + "}";
+
+        this.mockMvc
+                .perform(put("/socialactions/1")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
                 .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
     }
 }
