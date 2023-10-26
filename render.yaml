@@ -1,13 +1,18 @@
 services:
   - type: web
     name: keycloak
-    runtime: image
-    startCommand: kc.sh start-dev
-    image:
-      url: quay.io/keycloak/keycloak:22.0.4
+    runtime: docker
+    dockerfilePath: ./Back-end/keycloak/Dockerfile
+    dockerContext: ./Back-end/keycloak
     plan: free
+    region: oregon
     envVars:
     - key: KEYCLOAK_ADMIN
       value: admin
     - key: KEYCLOAK_ADMIN_PASSWORD
       value: A4d!25oS8h1%#!
+
+databases:
+  - name: keycloakdb
+    region: oregon
+    plan: free
