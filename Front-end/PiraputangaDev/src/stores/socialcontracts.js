@@ -9,6 +9,13 @@ export const useSocialContractsStore = defineStore('SocialContracts', {
     getters:{
         get(){
             return this.contractsList
+        },
+        getById(id){
+            this.contractsList.forEach(action => {
+                if(action.id == id){
+                    return action
+                }
+            });
         }
     },
     actions: {
