@@ -1,0 +1,42 @@
+{
+    "exp": 1698441066,
+    "iat": 1698440766,
+    "auth_time": 1698440735,
+    "jti": "65e5ff37-a5f0-470d-9d66-7cfee9a386a1",
+    "iss": "http://localhost:8080/realms/PiraputangaDev",
+    "aud": "account",
+    "sub": "dac4cc4a-c29c-49db-8722-e3d33e8011a8",
+    "typ": "Bearer",
+    "azp": "frontend-client",
+    "nonce": "eb809f24-7434-4156-9ba1-36098db1205d",
+    "session_state": "1e70cfd7-0ef0-4721-9bf0-930bc1f390c5",
+    "acr": "0",
+    "allowed-origins": [
+      "http://localhost:5173"
+    ],
+    "realm_access": {
+      "roles": [
+        "offline_access",
+        "default-roles-piraputangadev",
+        "uma_authorization",
+        "user"
+      ]
+    },
+    "resource_access": {
+      "account": {
+        "roles": [
+          "manage-account",
+          "manage-account-links",
+          "view-profile"
+        ]
+      }
+    },
+    "scope": "openid profile email",
+    "sid": "1e70cfd7-0ef0-4721-9bf0-930bc1f390c5",
+    "email_verified": false,
+    "name": "a a",
+    "preferred_username": "a",
+    "given_name": "a",
+    "family_name": "a",
+    "email": "test@test.com"
+  }

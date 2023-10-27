@@ -44,14 +44,14 @@ public class SocialContractController {
                 .build();
     }
 
-    private SocialContract convertToEntity(SocialContractDTO socialContract) {
+    /*private SocialContract convertToEntity(SocialContractDTO socialContract) {
         return SocialContract.builder()
                 .id(socialContract.getId())
                 .userEmail(socialContract.getUserEmail())
                 .socialActionId(socialContract.getSocialActionId())
                 .contractDate(socialContract.getContractDate())
                 .build();
-    }
+    }*/
 
     private SocialContract convertToEntityCreate(CreateSocialContractDTO socialContract, String userEmail) {
         return SocialContract.builder()
