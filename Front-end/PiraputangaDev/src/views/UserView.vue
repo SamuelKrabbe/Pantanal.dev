@@ -22,25 +22,27 @@ async function fetchSocialContracts() {
       authorization: `Bearer ${keycloak.token}`
     }
   })
-  keycloak.loadUserInfo().then(info => console.log(info.email))
   socialContracts.set(response.data)
 
-  socialContracts.get.forEach(socialContract => {
-    volunteeredSocialActions.push()
+  response.data.forEach(socialContract => {
+    volunteeredSocialActions.push(socialActions.getById(socialContract.socialActionId))
   });
 }
+
+onMounted(() => {
+  fetchSocialContracts
+})
 
 </script>
 
 <template>
-
-<div id="socialContractsListPage">
+  <div id="socialContractsListPage">
     <div id="header">
       <h1>Social Contracts List</h1>
     </div>
     <section id="socialContractsList">
-      <SocialAction @social-action-deleted="fetchSocialActions" v-for="(socialActionItem, index) in socialActions.get" :key="index" :social-action="socialActionItem"/>
+      <SocialAction @social-action-deleted="fetchSocialActions"
+        v-for="(socialActionItem, index) in volunteeredSocialActions" :key="index" :social-action="socialActionItem" />
     </section>
   </div>
-
 </template>
