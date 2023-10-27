@@ -269,42 +269,72 @@ input[type="submit"]:hover {
 	transform: scale(1.5);
 }
 
+#socialActionsListPage{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 #socialActionsList {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 100%;
+	width: 80%;
 }
 
 .socialAction {
 	display: flex;
+	flex-direction: column;
 	list-style: none;
 	width: 100%;
+	background-color: #c9dfec;
+	margin: 5px;
+	max-width: 100rem;
 }
 
-.socialAction li {
-	border: 1px solid gray;
+.socialAction #name {
 	display: flex;
-	align-items: center;
 	justify-content: center;
-	padding: 20px;
+	padding-top: 20px;
+	font-size: 30px;
+	font-weight: bold;
 	width: 100%;
+	max-width: 70%;
+	line-break: anywhere;
 }
 
-.more-about button {
+.socialAction #description {
 	display: flex;
 	justify-content: center;
-	margin: 0;
-	padding: 0px;
-	background: none;
+	width: 100%;
+	max-width: 70%;
+	line-break: anywhere;
+}
+
+#removeActionButton {
+	display: flex;
+	justify-content: center;
+	margin: 5px;
 	border: none;
-	font-size: 50px;
-	color: #45a049;
+	font-size: 20px;
+	color: #a04545;
 	width: 100%;
-	transition: transform 0.3s;
 }
 
-.more-about button:hover {
-	transform: scale(1.5);
-	color: #4caf50;
+#removeActionButton:hover {
+	background-color: #bac0c2;
+}
+
+#volunteerButton {
+	display: flex;
+	justify-content: center;
+	margin: 5px;
+	border: none;
+	font-size: 20px;
+	color: #58b95a;
+	width: 100%;
+}
+
+#volunteerButton:hover {
+	background-color: #bac0c2;
 }

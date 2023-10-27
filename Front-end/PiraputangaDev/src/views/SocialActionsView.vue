@@ -6,6 +6,13 @@ import axios from 'axios'
 import { reactive, ref } from 'vue';
 import { onMounted } from 'vue';
 
+import SocialAction from '../components/SocialAction.vue'
+
+import { useSocialActionStore } from '../stores/socialaction'
+
+const socialActions = useSocialActionStore()
+const email = ref({});
+
 async function fetchSocialActions() {
   const response = await axios.get('http://localhost:8081/socialactions', {
     headers: {
@@ -14,12 +21,8 @@ async function fetchSocialActions() {
     }
   })
   keycloak.loadUserInfo().then(info => email.value = info.email)
-  socialActions.data = response.data
-  console.log(socialActions)
+  socialActions.set(response.data)
 }
-
-const socialActions = reactive({ data: null });
-const email = ref(null);
 
 onMounted(() => {
   fetchSocialActions()
@@ -32,16 +35,8 @@ onMounted(() => {
     <div id="header">
       <h1>Social Actions List</h1>
     </div>
-    <ul id="socialActionsList">
-      <ul class="socialAction" v-for="(action, index) in socialActions.data" :key="index">
-        <li class="id">{{ action.id }}</li>
-        <li class="name">{{ action.name }}</li>
-        <li class="status">{{ action.status }}</li>
-        <li class="description">{{ action.description }}</li>
-        <li class="date">{{ action.startDate }}</li>
-        <li class="date">{{ action.endDate }}</li>
-        <li class="more-about">SAIBA MAIS</li>
-      </ul>
-    </ul>
+    <section id="socialActionsList">
+      <SocialAction @social-action-deleted="fetchSocialActions" v-for="(socialActionItem, index) in socialActions.get" :key="index" :social-action="socialActionItem"/>
+    </section>
   </div>
 </template>
