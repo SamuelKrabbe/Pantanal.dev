@@ -81,7 +81,7 @@ public class SocialContractControllerTests {
         String jsonRequest = "{"
                 + "\"socialActionId\": 123,"
                 + "\"userEmail\": \"test@test.com\","
-                + "\"startDate\": \"2023-10-26T00:00:00.000Z\""
+                + "\"contractDate\": \"2023-10-26T00:00:00.000Z\""
                 + "}";
 
         this.mockMvc
@@ -107,7 +107,7 @@ public class SocialContractControllerTests {
         String jsonRequest = "{"
                 + "\"socialActionId\": 123,"
                 + "\"userEmail\": \"test@test.com\","
-                + "\"startDate\": \"2023-10-26T00:00:00.000Z\""
+                + "\"contractDate\": \"2023-10-26T00:00:00.000Z\""
                 + "}";
 
         this.mockMvc
