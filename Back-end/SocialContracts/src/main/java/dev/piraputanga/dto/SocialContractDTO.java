@@ -20,7 +20,7 @@ public class SocialContractDTO {
     @NotBlank(message = "O email do usuario é obrigatório.")
     private String userEmail;
 
-    @NotBlank(message = "O id da ação é obrigatório.")
+    @NotNull(message = "O id da ação é obrigatório.")
     private Long socialActionId;
 
 
