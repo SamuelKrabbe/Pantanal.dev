@@ -3,7 +3,6 @@
 import keycloak from '../keycloak';
 import axios from 'axios'
 
-import { reactive, ref } from 'vue';
 import { onMounted } from 'vue';
 
 import SocialAction from '../components/SocialAction.vue'
@@ -11,7 +10,6 @@ import SocialAction from '../components/SocialAction.vue'
 import { useSocialActionStore } from '../stores/socialaction'
 
 const socialActions = useSocialActionStore()
-const email = ref({});
 
 async function fetchSocialActions() {
   const response = await axios.get('http://localhost:8081/socialactions', {
@@ -20,7 +18,6 @@ async function fetchSocialActions() {
       authorization: `Bearer ${keycloak.token}`
     }
   })
-  keycloak.loadUserInfo().then(info => email.value = info.email)
   socialActions.set(response.data)
 }
 
