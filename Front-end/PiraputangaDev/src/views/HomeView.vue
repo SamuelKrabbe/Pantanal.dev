@@ -8,6 +8,10 @@ import { RouterLink, RouterView } from 'vue-router'
 import keycloak from '../keycloak';
 import axios from 'axios'
 
+import { useSocialActionStore } from '../stores/socialaction'
+
+const socialActions = useSocialActionStore()
+
 const socialaction = reactive({
   name: null,
   status: false,
@@ -22,15 +26,14 @@ const styles = reactive({
 })
 
 async function createSocialAction() {
-  //const socialAction = { name: 'teste', status: false, description: "teste desc", startDate: "2023-01-01", endDate: "2023-02-01" }
-  console.log(socialaction)
   const response = await axios.post('http://localhost:8081/socialactions', socialaction, {
     headers: {
       accept: 'application/json',
       authorization: `Bearer ${keycloak.token}`
     }
   })
-  console.log(response.data)
+  socialActions.add(response.data)
+  closeCreateSocialActionMenu()
 }
 
 function openCreateSocialActionMenu() {
@@ -41,9 +44,9 @@ function closeCreateSocialActionMenu() {
   styles.displayMenu = "none"
 }
 
-onMounted(() => {
-  console.log(keycloak.token)
-})
+// onMounted(() => {
+//   console.log(keycloak.token)
+// })
 
 </script>
 <template>

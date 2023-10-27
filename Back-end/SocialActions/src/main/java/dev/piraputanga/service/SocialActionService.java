@@ -28,7 +28,7 @@ public class SocialActionService {
     }
 
     // READ
-    public Optional<SocialAction> getSocialAction(Long id) {
+    public Optional<SocialAction> getSocialAction(Long id) throws IllegalArgumentException {
         return this.repository.findById(id);
     }
 
