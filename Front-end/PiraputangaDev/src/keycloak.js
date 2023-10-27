@@ -1,7 +1,7 @@
 import Keycloak from "keycloak-js";
 
 let initOptions = {
-  url: 'http://localhost:8080/',
+  url: 'https://keycloak-4208.onrender.com/',
   realm: 'PiraputangaDev',
   clientId: 'frontend-client',
   onLoad: "login-required"
