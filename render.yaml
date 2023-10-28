@@ -7,6 +7,7 @@ services:
     plan: free
     region: oregon
     envVars:
+    autoDeploy: false
     - key: KEYCLOAK_ADMIN
       value: admin
     - key: KEYCLOAK_ADMIN_PASSWORD

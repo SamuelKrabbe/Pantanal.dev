@@ -6,6 +6,7 @@ keycloak:
     realm: PiraputangaDev
 
 spring:
+    application.name: email-service
     security:
         oauth2:
             resourceserver:
@@ -23,3 +24,10 @@ spring:
                     auth: true
                     starttls:
                         enable: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
