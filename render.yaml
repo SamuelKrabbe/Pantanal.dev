@@ -18,6 +18,7 @@ services:
     plan: free
     dockerfilePath: ./Back-end/discovery-server/Dockerfile
     dockerContext: ./Back-end/discovery-server
+    autoDeploy: false
   - type: web
     name: api-gateway
     runtime: docker
