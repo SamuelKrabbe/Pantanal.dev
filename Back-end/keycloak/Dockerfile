@@ -11,8 +11,8 @@ ENV KC_DB_USERNAME=keycloakdb_user
 ENV KC_DB_URL_DATABASE=keycloakdb_xxug
 ENV KC_DB_URL_HOST=dpg-cktflgm5or3s7387rrfg-a
 ENV KC_DB_PASSWORD=V9TvvyRJCZr7hSHj7rQ9tCqlqYteRxw0
-ENV KC_HOSTNAME_URL=https://keycloak-4208.onrender.com/
-ENV KC_HOSTNAME_ADMIN_URL=https://keycloak-4208.onrender.com/
+ENV KC_HOSTNAME_URL=https://keycloak-00hq.onrender.com/
+ENV KC_HOSTNAME_ADMIN_URL=https://keycloak-00hq.onrender.com/
 ENV KC_HTTP_ENABLED=true
 
 EXPOSE 8080
