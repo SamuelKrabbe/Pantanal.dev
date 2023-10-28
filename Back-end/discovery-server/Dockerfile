@@ -1,6 +1,6 @@
 FROM eclipse-temurin:17-jdk as builder
 COPY . .
-RUN ./mvnw clean package
+RUN ./mvnw package
 RUN cp target/*.jar application.jar
 RUN java -Djarmode=layertools -jar application.jar extract
 
