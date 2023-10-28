@@ -8,6 +8,10 @@ import { RouterLink, RouterView } from 'vue-router'
 import keycloak from '../keycloak';
 import axios from 'axios'
 
+import { useSocialActionStore } from '../stores/socialaction'
+
+const socialActions = useSocialActionStore()
+
 const socialaction = reactive({
   name: null,
   status: false,
@@ -22,15 +26,14 @@ const styles = reactive({
 })
 
 async function createSocialAction() {
-  //const socialAction = { name: 'teste', status: false, description: "teste desc", startDate: "2023-01-01", endDate: "2023-02-01" }
-  console.log(socialaction)
   const response = await axios.post('http://localhost:8081/socialactions', socialaction, {
     headers: {
       accept: 'application/json',
       authorization: `Bearer ${keycloak.token}`
     }
   })
-  console.log(response.data)
+  socialActions.add(response.data)
+  closeCreateSocialActionMenu()
 }
 
 function openCreateSocialActionMenu() {
@@ -41,9 +44,10 @@ function closeCreateSocialActionMenu() {
   styles.displayMenu = "none"
 }
 
-onMounted(() => {
-  console.log(keycloak.token)
-})
+// onMounted(() => {
+//   keycloak.loadUserInfo().then(info => console.log(info.email))
+//   console.log(keycloak.token)
+// })
 
 </script>
 <template>
@@ -52,7 +56,7 @@ onMounted(() => {
     <div id="navbar">
       <a id="logo" href="#"><img src="../assets/logo.jpg" alt="fish logo" /></a>
 
-      <a id="register" href="#" @click="openCreateSocialActionMenu"><span><b>CADASTRAR</b> AÇÃO</span></a>
+      <a v-if="keycloak.hasRealmRole('admin')" id="register" href="#" @click="openCreateSocialActionMenu"><span><b>CADASTRAR</b> AÇÃO</span></a>
 
       <div id="myModal" class="modal" :style="{ display: styles.displayMenu }">
         <div class="modal-content">
@@ -79,7 +83,7 @@ onMounted(() => {
         </div>
       </div>
 
-      <a id="share" href="#"><span><b>DIVULGAR</b> AÇÃO</span></a>
+      <a v-if="keycloak.hasRealmRole('admin')" id="share" href="#"><span><b>DIVULGAR</b> AÇÃO</span></a>
 
       <a href="#socialActionsListPage"><span><b>VER</b> AÇÕES</span></a>
 
