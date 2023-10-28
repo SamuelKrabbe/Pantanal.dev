@@ -45,6 +45,7 @@ function closeCreateSocialActionMenu() {
 }
 
 // onMounted(() => {
+//   keycloak.loadUserInfo().then(info => console.log(info.email))
 //   console.log(keycloak.token)
 // })
 
@@ -55,7 +56,7 @@ function closeCreateSocialActionMenu() {
     <div id="navbar">
       <a id="logo" href="#"><img src="../assets/logo.jpg" alt="fish logo" /></a>
 
-      <a id="register" href="#" @click="openCreateSocialActionMenu"><span><b>CADASTRAR</b> AÇÃO</span></a>
+      <a v-if="keycloak.hasRealmRole('admin')" id="register" href="#" @click="openCreateSocialActionMenu"><span><b>CADASTRAR</b> AÇÃO</span></a>
 
       <div id="myModal" class="modal" :style="{ display: styles.displayMenu }">
         <div class="modal-content">
@@ -82,7 +83,7 @@ function closeCreateSocialActionMenu() {
         </div>
       </div>
 
-      <a id="share" href="#"><span><b>DIVULGAR</b> AÇÃO</span></a>
+      <a v-if="keycloak.hasRealmRole('admin')" id="share" href="#"><span><b>DIVULGAR</b> AÇÃO</span></a>
 
       <a href="#socialActionsListPage"><span><b>VER</b> AÇÕES</span></a>
 
