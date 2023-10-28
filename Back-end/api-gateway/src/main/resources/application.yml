@@ -29,4 +29,4 @@ eureka:
     serviceUrl:
       defaultZone: https://service-discovery.onrender.com/eureka
   instance:
-    hostname: https://api-gateway.onrender.com
+    hostname: https://api-gateway-lzs7.onrender.com
