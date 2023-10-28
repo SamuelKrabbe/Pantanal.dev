@@ -18,6 +18,13 @@ services:
     plan: free
     dockerfilePath: ./Back-end/discovery-server/Dockerfile
     dockerContext: ./Back-end/discovery-server
+  - type: web
+    name: api-gateway
+    runtime: docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./Back-end/api-gateway/Dockerfile
+    dockerContext: ./Back-end/api-gateway
 
 databases:
   - name: keycloakdb
