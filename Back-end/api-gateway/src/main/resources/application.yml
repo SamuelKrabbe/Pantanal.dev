@@ -24,6 +24,10 @@ spring:
                   uri: lb://SOCIALCONTRACTS-SERVICE
                   predicates:
                     - Path=/socialcontracts
+                - id: socialcontracts-service
+                  uri: lb://SOCIALCONTRACTS-SERVICE
+                  predicates:
+                    - Path=/socialcontracts/**
                     
     security:
         oauth2:

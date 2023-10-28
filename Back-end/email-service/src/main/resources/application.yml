@@ -2,7 +2,7 @@ server:
     port: 8083
 
 keycloak:
-    clientSecret: ShKKRC6M5awKrNA1tkRq8EoXm5lMcgUv
+    clientSecret: oMhlqir20J0yrxmwkP0HuaX91gFaKNuB
     realm: PiraputangaDev
 
 spring:

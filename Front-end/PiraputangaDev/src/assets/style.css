@@ -275,6 +275,19 @@ input[type="submit"]:hover {
 	align-items: center;
 }
 
+#socialContractsListPage{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#socialContractsList{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 80%;
+}
+
 #socialActionsList {
 	display: flex;
 	flex-direction: column;
@@ -304,6 +317,14 @@ input[type="submit"]:hover {
 }
 
 .socialAction #description {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	max-width: 70%;
+	line-break: anywhere;
+}
+
+.socialAction #dates {
 	display: flex;
 	justify-content: center;
 	width: 100%;

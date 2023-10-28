@@ -31,8 +31,6 @@ async function volunteerToSocialAction(socialAction){
       authorization: `Bearer ${keycloak.token}`
     }
   })
-
-
 }
 
 </script>
@@ -42,7 +40,7 @@ async function volunteerToSocialAction(socialAction){
     <section class="socialAction">
         <p id="name"> {{ socialAction.name }} </p>
         <p id="description"> {{ socialAction.description }}</p>
-        <p id="dates"> Datas: {{ socialAction.startDate }} à {{ socialAction.endDate }}</p>
+        <p id="dates"> Período: {{ socialAction.startDate.substring(0,10) }} à {{ socialAction.endDate.substring(0,10) }}</p>
         <button id="removeActionButton" v-if="keycloak.hasRealmRole('admin')" @click="deleteSocialAction(socialAction)"> Remover ação</button>
         <button id="volunteerButton" v-if="keycloak.hasRealmRole('user')" @click="volunteerToSocialAction(socialAction)"> Voluntariar-se</button>
     </section>

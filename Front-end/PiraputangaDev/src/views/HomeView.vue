@@ -10,6 +10,7 @@ import axios from 'axios'
 
 import { useSocialActionStore } from '../stores/socialaction'
 
+
 const socialActions = useSocialActionStore()
 
 const socialaction = reactive({
@@ -20,10 +21,17 @@ const socialaction = reactive({
   endDate: null
 })
 
+const email = reactive({
+  subject: null,
+  body: null
+})
+
 const styles = reactive({
   displayMenu: "none",
-  containerDisplay: "block"
+  containerDisplay: "block",
+  emailMenu: "none"
 })
+
 
 async function createSocialAction() {
   const response = await axios.post('http://localhost:8081/socialactions', socialaction, {
@@ -36,6 +44,18 @@ async function createSocialAction() {
   closeCreateSocialActionMenu()
 }
 
+async function sendEmails(){
+  const response = await axios.post('http://localhost:8081/sendEmails', email, {
+    headers: {
+      accept: 'application/json',
+      authorization: `Bearer ${keycloak.token}`
+    }
+  })
+
+  console.log(response.data)
+  closeEmailMenu()
+}
+
 function openCreateSocialActionMenu() {
   styles.displayMenu = "block"
 }
@@ -44,10 +64,13 @@ function closeCreateSocialActionMenu() {
   styles.displayMenu = "none"
 }
 
-// onMounted(() => {
-//   keycloak.loadUserInfo().then(info => console.log(info.email))
-//   console.log(keycloak.token)
-// })
+function openEmailMenu(){
+  styles.emailMenu = "block"
+}
+
+function closeEmailMenu(){
+  styles.emailMenu = "none"
+}
 
 </script>
 <template>
@@ -83,9 +106,28 @@ function closeCreateSocialActionMenu() {
         </div>
       </div>
 
-      <a v-if="keycloak.hasRealmRole('admin')" id="share" href="#"><span><b>DIVULGAR</b> AÇÃO</span></a>
+      <a v-if="keycloak.hasRealmRole('admin')" @click="openEmailMenu" id="share" href="#"><span><b>DIVULGAR</b> AÇÃO</span></a>
+
+      <div v-if="keycloak.hasRealmRole('admin')" id="emailModal" class="modal" :style="{ display: styles.emailMenu }">
+        <div class="modal-content">
+          <span class="close" @click="closeEmailMenu">X</span>
+          <h2 style="margin: 15px auto">
+            Envio de Email
+          </h2> 
+
+          <div id="form">
+            <input v-model="email.subject" type="text" id="emailSubject" name="emailSubject" placeholder="Assunto" required />
+            <br /><br />
+            <textarea v-model="email.body" id="body" name="body" placeholder="Corpo do email" required></textarea>
+            <br /><br />
+            <input @click="sendEmails" type="submit" value="Divulgar" />
+          </div>
+        </div>
+      </div>
 
       <a href="#socialActionsListPage"><span><b>VER</b> AÇÕES</span></a>
+
+      <router-link to="/user">USER</router-link>
 
       <div class="search-box" id="searchBox">
         <input type="text" placeholder="Pesquisar..." />
@@ -101,26 +143,11 @@ function closeCreateSocialActionMenu() {
     <div id="content">
       <h1>QUEM SOMOS?</h1>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Enim laudantium minus, iure magni autem fugit! Dignissimos
-        ab natus eos, laborum assumenda, nemo commodi, beatae
-        explicabo excepturi voluptatum culpa recusandae eligendi!
+        Nós somos a equipe Piraputanga.dev, composta por quatro membros: Luiz Gustavo S. S. Junqueira, Alexandre Diniz de Souza, Pedro Henrique M. de Labio e Samuel de Oliveira Krabbe.
+Este produto é o resultado de nossa participação no programa Pantanal.dev, uma iniciativa de capacitação realizada pelas empresas da B3 em parceria com a Universidade Federal de Mato Grosso do Sul (UFMS).
+Contamos também com a colaboração do nosso mentor Marlon Ergon dos Santos, da PDTec, que desempenhou um papel fundamental em nossa jornada.
       </p>
-      <h1>VISÃO</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Enim laudantium minus, iure magni autem fugit! Dignissimos
-        ab natus eos, laborum assumenda, nemo commodi, beatae
-        explicabo excepturi voluptatum culpa recusandae eligendi!
-      </p>
-      <h1>MISSÃO</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Enim laudantium minus, iure magni autem fugit! Dignissimos
-        ab natus eos, laborum assumenda, nemo commodi, beatae
-        explicabo excepturi voluptatum culpa recusandae eligendi!
-      </p>
-      <h1>VALORES</h1>
+      <h1>VALORES DA B3 SOCIAL</h1>
       <ul>
         <li>
           <span>Compromisso Social: Estamos comprometidos com a
@@ -147,33 +174,7 @@ function closeCreateSocialActionMenu() {
         </li>
       </ul>
     </div>
-    <div id="footer">
-      <ul id="linksFooter">
-        <li><a href="#">Termos de uso e proteção de dados</a></li>
-        <li><a href="#">Atendimento</a></li>
-        <li><a href="#">Canal de denúncias</a></li>
-      </ul>
-      <ul id="socialMedia">
-        <li>
-          <a href="#"></a>
-        </li>
-        <li>
-          <a href="#"></a>
-        </li>
-        <li>
-          <a href="#"></a>
-        </li>
-        <li>
-          <a href="#"></a>
-        </li>
-        <li>
-          <a href="#"></a>
-        </li>
-        <li>
-          <a href="#"></a>
-        </li>
-      </ul>
-    </div>
+
   </div>
 </template>
 

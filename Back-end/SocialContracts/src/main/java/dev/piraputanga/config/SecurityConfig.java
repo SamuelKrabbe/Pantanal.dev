@@ -29,7 +29,7 @@ class SecurityConfig {
 
                 http.authorizeHttpRequests((authorize) -> authorize
                                 .requestMatchers(new AntPathRequestMatcher("/socialcontracts", "POST"))
-                                .hasAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
+                                .hasAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "user")
                                 .requestMatchers(new AntPathRequestMatcher("/socialcontracts/**", "DELETE"))
                                 .hasAuthority(KeycloakJwtRolesConverter.PREFIX_REALM_ROLE + "admin")
                                 // .requestMatchers(new AntPathRequestMatcher("/socialcontracts", "PUT"))

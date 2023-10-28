@@ -30,7 +30,7 @@ onMounted(() => {
 
   <div id="socialActionsListPage">
     <div id="header">
-      <h1>Social Actions List</h1>
+      <h1>Lista das Ações Sociais</h1>
     </div>
     <section id="socialActionsList">
       <SocialAction @social-action-deleted="fetchSocialActions" v-for="(socialActionItem, index) in socialActions.get" :key="index" :social-action="socialActionItem"/>
