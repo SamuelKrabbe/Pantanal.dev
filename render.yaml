@@ -11,6 +11,13 @@ services:
       value: admin
     - key: KEYCLOAK_ADMIN_PASSWORD
       value: A4d!25oS8h1%#!
+  - type: web
+    name: service-discovery
+    runtime: docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./Back-end/discovery-server/Dockerfile
+    dockerContext: ./Back-end/discovery-server
 
 databases:
   - name: keycloakdb
